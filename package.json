@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "browserify -t [ babelify --presets [ es2015 react ] ] src/index.js -o build/app.js",
+    "watch": "nodemon --exec 'npm run build'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -16,5 +17,8 @@
     "browserify": "^13.1.1",
     "react": "^15.4.1",
     "react-dom": "^15.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
