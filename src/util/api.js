@@ -12,8 +12,7 @@ const promisifyRequest = (req) => {
 }
 
 export const get = (pathname, params = {}) => {
-  const url = "http://" + path.join(config.api, pathname)
-  console.log(config, url, pathname)
+  const url = window.location.protocol + "//" + path.join(config.api, pathname)
   return promisifyRequest(request.get(url).query(params))
 }
 
