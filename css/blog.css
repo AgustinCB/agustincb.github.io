@@ -19,6 +19,10 @@ h3 {
 
 code {
   white-space: pre;
+  background-color: #ddd;
+  display: block;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 p:has(code) {
@@ -68,20 +72,6 @@ p:has(code) {
     *display: inline;
     zoom: 1;
 }
-.nav-item a {
-    background: transparent;
-    border: 2px solid rgb(176, 202, 219);
-    color: #fff;
-    margin-top: 1em;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    font-size: 85%;
-}
-.nav-item a:hover,
-.nav-item a:focus {
-    border: 2px solid rgb(61, 146, 201);
-    text-decoration: none;
-}
 
 .content-subhead {
     text-transform: uppercase;
@@ -128,18 +118,18 @@ p:has(code) {
     background: #999;
     font-size: 80%;
 }
-    .post-category-design {
-        background: #5aba59;
-    }
-    .post-category-pure {
-        background: #4d85d1;
-    }
-    .post-category-yui {
-        background: #8156a7;
-    }
-    .post-category-js {
-        background: #df2d4f;
-    }
+.post-category-design {
+    background: #5aba59;
+}
+.post-category-pure {
+    background: #4d85d1;
+}
+.post-category-yui {
+    background: #8156a7;
+}
+.post-category-js {
+    background: #df2d4f;
+}
 
 .post-images {
     margin: 1em 0;
@@ -149,6 +139,21 @@ p:has(code) {
     margin-left: 1em;
     color: #fff;
     text-shadow: 0 1px 1px #333;
+}
+
+.pure-button {
+    background: transparent;
+    border: 2px solid rgb(176, 202, 219);
+    color: #fff;
+    margin-top: 1em;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 85%;
+}
+.pure-button:hover,
+.pure-button:focus {
+    border: 2px solid rgb(61, 146, 201);
+    text-decoration: none;
 }
 
 .footer {

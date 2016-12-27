@@ -31648,7 +31648,83 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"./Sidebar":270,"react":236}],270:[function(require,module,exports){
+},{"./Sidebar":271,"react":236}],270:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _markdown = require('markdown');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_React$Component) {
+  _inherits(_class, _React$Component);
+
+  function _class() {
+    _classCallCheck(this, _class);
+
+    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+  }
+
+  _createClass(_class, [{
+    key: 'render',
+    value: function render() {
+      var post = this.props.post;
+      return _react2.default.createElement(
+        'section',
+        { className: 'post', key: post.id },
+        _react2.default.createElement(
+          'header',
+          { className: 'post-header', key: post.id },
+          _react2.default.createElement('img', { key: post.id, width: '48', height: '48', alt: post.author.username + '\'s avatar', className: 'post-avatar', src: 'http://2.gravatar.com/avatar/81f8e116302db3b8643873eda3109f2e' }),
+          _react2.default.createElement(
+            'h2',
+            { key: post.id },
+            post.title
+          ),
+          _react2.default.createElement(
+            'p',
+            { key: post.id, className: 'post-meta' },
+            'By ',
+            _react2.default.createElement(
+              'a',
+              { key: post.id, className: 'post-author' },
+              post.author.username
+            ),
+            ' under ',
+            _react2.default.createElement(
+              'a',
+              { key: post.id, className: 'post-category' },
+              'Uncategorized'
+            )
+          )
+        ),
+        _react2.default.createElement('div', { key: post.id, className: 'post-description',
+          dangerouslySetInnerHTML: { __html: _markdown.markdown.toHTML(post.content) } })
+      );
+    }
+  }]);
+
+  return _class;
+}(_react2.default.Component);
+
+exports.default = _class;
+
+},{"markdown":46,"react":236}],271:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -31696,6 +31772,15 @@ var _class = function (_React$Component) {
             "h2",
             { className: "brand-tagline" },
             "AgustinCB's computing adventures"
+          ),
+          _react2.default.createElement(
+            "div",
+            null,
+            _react2.default.createElement(
+              "a",
+              { href: "http://github.com/AgustinCB", target: "_blank", className: "pure-button" },
+              "GitHub"
+            )
           )
         )
       );
@@ -31707,7 +31792,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"react":236}],271:[function(require,module,exports){
+},{"react":236}],272:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -31749,7 +31834,7 @@ var router = _react2.default.createElement(
 
 _reactDom2.default.render(router, document.getElementById('app'));
 
-},{"./components/App":269,"./pages/HomePage":272,"./pages/NotFoundPage":273,"react":236,"react-dom":52,"react-router":205}],272:[function(require,module,exports){
+},{"./components/App":269,"./pages/HomePage":273,"./pages/NotFoundPage":274,"react":236,"react-dom":52,"react-router":205}],273:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31762,8 +31847,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _markdown = require('markdown');
-
 var _post = require('../actions/post');
 
 var _post2 = _interopRequireDefault(_post);
@@ -31771,6 +31854,10 @@ var _post2 = _interopRequireDefault(_post);
 var _post3 = require('../stores/post');
 
 var _post4 = _interopRequireDefault(_post3);
+
+var _Post = require('../components/Post');
+
+var _Post2 = _interopRequireDefault(_Post);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31815,38 +31902,7 @@ var _class = function (_React$Component) {
     key: 'render',
     value: function render() {
       var posts = this.state.posts.map(function (post) {
-        return _react2.default.createElement(
-          'section',
-          { className: 'post', key: post.id },
-          _react2.default.createElement(
-            'header',
-            { className: 'post-header', key: post.id },
-            _react2.default.createElement('img', { key: post.id, width: '48', height: '48', alt: 'AgustinCB\'s avatar', className: 'post-avatar', src: 'http://2.gravatar.com/avatar/81f8e116302db3b8643873eda3109f2e' }),
-            _react2.default.createElement(
-              'h2',
-              { key: post.id },
-              post.title
-            ),
-            _react2.default.createElement(
-              'p',
-              { key: post.id, className: 'post-meta' },
-              'By ',
-              _react2.default.createElement(
-                'a',
-                { key: post.id, className: 'post-author' },
-                post.author.username
-              ),
-              ' under ',
-              _react2.default.createElement(
-                'a',
-                { key: post.id, className: 'post-category' },
-                'Uncategorized'
-              )
-            )
-          ),
-          _react2.default.createElement('div', { key: post.id, className: 'post-description',
-            dangerouslySetInnerHTML: { __html: _markdown.markdown.toHTML(post.content) } })
-        );
+        return _react2.default.createElement(_Post2.default, { key: post.id, post: post });
       });
       return _react2.default.createElement(
         'div',
@@ -31861,7 +31917,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"../actions/post":268,"../stores/post":274,"markdown":46,"react":236}],273:[function(require,module,exports){
+},{"../actions/post":268,"../components/Post":270,"../stores/post":275,"react":236}],274:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31907,7 +31963,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"react":236}],274:[function(require,module,exports){
+},{"react":236}],275:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31946,7 +32002,7 @@ exports.default = _reflux2.default.createStore({
   }
 });
 
-},{"../actions/post":268,"../util/post":276,"reflux":254}],275:[function(require,module,exports){
+},{"../actions/post":268,"../util/post":277,"reflux":254}],276:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32005,7 +32061,7 @@ var del = exports.del = function del(pathname) {
   return promisifyRequest(_superagent2.default.del(url).query(params));
 };
 
-},{"../../config.json":1,"path":49,"superagent":258}],276:[function(require,module,exports){
+},{"../../config.json":1,"path":49,"superagent":258}],277:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32023,4 +32079,4 @@ var all = exports.all = function all() {
   return api.get('/post');
 };
 
-},{"./api":275}]},{},[271]);
+},{"./api":276}]},{},[272]);
