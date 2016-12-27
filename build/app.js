@@ -32135,6 +32135,7 @@ var get = exports.get = function get(pathname) {
   var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
   var url = _path2.default.join(_config2.default.api, pathname);
+  console.log(_config2.default, url, pathname);
   return promisifyRequest(_superagent2.default.get(url).query(params));
 };
 
