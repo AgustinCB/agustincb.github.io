@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "./node_modules/standard/bin/cmd.js 'src/**/*.js'",
     "build": "browserify -t [ babelify --presets [ es2015 react ] ] src/index.js -o build/app.js",
-    "dev": "static -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}'",
+    "dev": "static -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}' --spa",
     "watch": "nodemon --exec 'npm run build'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

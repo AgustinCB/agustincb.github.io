@@ -3,7 +3,8 @@
 import Reflux from 'reflux'
 
 const PostActions = Reflux.createActions([
-  'all'
+  'all',
+  'view'
 ])
 
 export default PostActions

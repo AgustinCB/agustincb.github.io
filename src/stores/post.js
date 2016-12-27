@@ -8,6 +8,7 @@ import * as Post from '../util/post'
 export default Reflux.createStore({
   init () {
     this.listenTo(PostActions.all, this.getAll)
+    this.listenTo(PostActions.view, this.getPost)
   },
 
   throwError (err) {
@@ -16,6 +17,12 @@ export default Reflux.createStore({
 
   getAll () {
     Post.all()
+      .then((res) => this.trigger(null, res.body))
+      .catch(this.throwError)
+  },
+
+  getPost (id) {
+    Post.view(id)
       .then((res) => this.trigger(null, res.body))
       .catch(this.throwError)
   }

@@ -31576,7 +31576,7 @@ var _reflux2 = _interopRequireDefault(_reflux);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var PostActions = _reflux2.default.createActions(['all']);
+var PostActions = _reflux2.default.createActions(['all', 'view']);
 
 exports.default = PostActions;
 
@@ -31686,34 +31686,38 @@ var _class = function (_React$Component) {
       var post = this.props.post;
       return _react2.default.createElement(
         'section',
-        { className: 'post', key: post.id },
+        { className: 'post' },
         _react2.default.createElement(
           'header',
-          { className: 'post-header', key: post.id },
-          _react2.default.createElement('img', { key: post.id, width: '48', height: '48', alt: post.author.username + '\'s avatar', className: 'post-avatar', src: 'http://2.gravatar.com/avatar/81f8e116302db3b8643873eda3109f2e' }),
+          { className: 'post-header' },
+          _react2.default.createElement('img', { width: '48', height: '48', alt: post.author.username + '\'s avatar', className: 'post-avatar', src: 'http://2.gravatar.com/avatar/81f8e116302db3b8643873eda3109f2e' }),
           _react2.default.createElement(
             'h2',
-            { key: post.id },
-            post.title
+            null,
+            _react2.default.createElement(
+              'a',
+              { href: '/post/' + post._id },
+              post.title
+            )
           ),
           _react2.default.createElement(
             'p',
-            { key: post.id, className: 'post-meta' },
+            { className: 'post-meta' },
             'By ',
             _react2.default.createElement(
               'a',
-              { key: post.id, className: 'post-author' },
+              { className: 'post-author' },
               post.author.username
             ),
             ' under ',
             _react2.default.createElement(
               'a',
-              { key: post.id, className: 'post-category' },
+              { className: 'post-category' },
               'Uncategorized'
             )
           )
         ),
-        _react2.default.createElement('div', { key: post.id, className: 'post-description',
+        _react2.default.createElement('div', { className: 'post-description',
           dangerouslySetInnerHTML: { __html: _markdown.markdown.toHTML(post.content) } })
       );
     }
@@ -31764,9 +31768,13 @@ var _class = function (_React$Component) {
           "div",
           { className: "header" },
           _react2.default.createElement(
-            "h1",
-            { className: "brand-title" },
-            "cat /var/log/me"
+            "a",
+            { href: "/" },
+            _react2.default.createElement(
+              "h1",
+              { className: "brand-title" },
+              "cat /var/log/me"
+            )
           ),
           _react2.default.createElement(
             "h2",
@@ -31813,6 +31821,10 @@ var _HomePage = require('./pages/HomePage');
 
 var _HomePage2 = _interopRequireDefault(_HomePage);
 
+var _PostPage = require('./pages/PostPage');
+
+var _PostPage2 = _interopRequireDefault(_PostPage);
+
 var _NotFoundPage = require('./pages/NotFoundPage');
 
 var _NotFoundPage2 = _interopRequireDefault(_NotFoundPage);
@@ -31828,13 +31840,15 @@ var router = _react2.default.createElement(
     _react2.default.createElement(_reactRouter.IndexRoute, { component: _HomePage2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: '', component: _HomePage2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: '/', component: _HomePage2.default }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'post/:id', component: _PostPage2.default }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'post/:id/', component: _PostPage2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: '*', component: _HomePage2.default })
   )
 );
 
 _reactDom2.default.render(router, document.getElementById('app'));
 
-},{"./components/App":269,"./pages/HomePage":273,"./pages/NotFoundPage":274,"react":236,"react-dom":52,"react-router":205}],273:[function(require,module,exports){
+},{"./components/App":269,"./pages/HomePage":273,"./pages/NotFoundPage":274,"./pages/PostPage":275,"react":236,"react-dom":52,"react-router":205}],273:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31902,7 +31916,7 @@ var _class = function (_React$Component) {
     key: 'render',
     value: function render() {
       var posts = this.state.posts.map(function (post) {
-        return _react2.default.createElement(_Post2.default, { key: post.id, post: post });
+        return _react2.default.createElement(_Post2.default, { key: post._id, post: post });
       });
       return _react2.default.createElement(
         'div',
@@ -31917,7 +31931,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"../actions/post":268,"../components/Post":270,"../stores/post":275,"react":236}],274:[function(require,module,exports){
+},{"../actions/post":268,"../components/Post":270,"../stores/post":276,"react":236}],274:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31970,6 +31984,82 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _post = require('../actions/post');
+
+var _post2 = _interopRequireDefault(_post);
+
+var _post3 = require('../stores/post');
+
+var _post4 = _interopRequireDefault(_post3);
+
+var _Post = require('../components/Post');
+
+var _Post2 = _interopRequireDefault(_Post);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_React$Component) {
+  _inherits(_class, _React$Component);
+
+  function _class() {
+    _classCallCheck(this, _class);
+
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+
+    _this.state = {};
+
+    _this.onPost = _this.onPost.bind(_this);
+    return _this;
+  }
+
+  _createClass(_class, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.unsubscribe = _post4.default.listen(this.onPost);
+      _post2.default.view(this.props.params.id);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.unsubscribe();
+    }
+  }, {
+    key: 'onPost',
+    value: function onPost(err, post) {
+      this.setState({ post: post });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      if (!this.state.post) return _react2.default.createElement('div', null);
+      return _react2.default.createElement(_Post2.default, { post: this.state.post });
+    }
+  }]);
+
+  return _class;
+}(_react2.default.Component);
+
+exports.default = _class;
+
+},{"../actions/post":268,"../components/Post":270,"../stores/post":276,"react":236}],276:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _reflux = require('reflux');
 
 var _reflux2 = _interopRequireDefault(_reflux);
@@ -31989,6 +32079,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = _reflux2.default.createStore({
   init: function init() {
     this.listenTo(_post2.default.all, this.getAll);
+    this.listenTo(_post2.default.view, this.getPost);
   },
   throwError: function throwError(err) {
     this.trigger(err);
@@ -31999,10 +32090,17 @@ exports.default = _reflux2.default.createStore({
     Post.all().then(function (res) {
       return _this.trigger(null, res.body);
     }).catch(this.throwError);
+  },
+  getPost: function getPost(id) {
+    var _this2 = this;
+
+    Post.view(id).then(function (res) {
+      return _this2.trigger(null, res.body);
+    }).catch(this.throwError);
   }
 });
 
-},{"../actions/post":268,"../util/post":277,"reflux":254}],276:[function(require,module,exports){
+},{"../actions/post":268,"../util/post":278,"reflux":254}],277:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32061,13 +32159,13 @@ var del = exports.del = function del(pathname) {
   return promisifyRequest(_superagent2.default.del(url).query(params));
 };
 
-},{"../../config.json":1,"path":49,"superagent":258}],277:[function(require,module,exports){
+},{"../../config.json":1,"path":49,"superagent":258}],278:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.all = undefined;
+exports.view = exports.all = undefined;
 
 var _api = require('./api');
 
@@ -32079,4 +32177,8 @@ var all = exports.all = function all() {
   return api.get('/post');
 };
 
-},{"./api":276}]},{},[272]);
+var view = exports.view = function view(id) {
+  return api.get('/post/' + id);
+};
+
+},{"./api":277}]},{},[272]);
