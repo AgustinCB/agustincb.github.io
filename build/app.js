@@ -1,6 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports={
-  "api": "https://simple-blog-machine.herokuapp.com/api"
+  "api": "simple-blog-machine.herokuapp.com/api"
 }
 
 },{}],2:[function(require,module,exports){
@@ -32134,7 +32134,7 @@ var promisifyRequest = function promisifyRequest(req) {
 var get = exports.get = function get(pathname) {
   var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-  var url = _path2.default.join(_config2.default.api, pathname);
+  var url = "http://" + _path2.default.join(_config2.default.api, pathname);
   console.log(_config2.default, url, pathname);
   return promisifyRequest(_superagent2.default.get(url).query(params));
 };
