@@ -28,7 +28,7 @@ export default class extends React.Component {
   render () {
     if (!this.state.post) return (<div></div>)
     return (
-      <Post post={this.state.post} />
+      <Post post={this.state.post}  showComments={true} />
     )
   }
 }

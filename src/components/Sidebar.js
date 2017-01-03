@@ -7,7 +7,7 @@ export default class extends React.Component {
         <div className="header">
           <a href="/"><h1 className="brand-title">cat /var/log/me</h1></a>
           <h2 className="brand-tagline">AgustinCB&apos;s computing adventures</h2>
-          <div><a href="http://github.com/AgustinCB" target="_blank" className="pure-button">GitHub</a></div>
+          <div><a href="http://github.com/AgustinCB" target="_blank" className="pure-button blog-button">GitHub</a></div>
         </div>
       </div>
     )

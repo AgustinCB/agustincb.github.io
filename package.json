@@ -7,7 +7,7 @@
     "lint": "./node_modules/standard/bin/cmd.js 'src/**/*.js'",
     "build": "browserify -t [ babelify --presets [ es2015 react ] ] src/index.js -o build/app.js",
     "dev": "static -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}' --spa",
-    "watch": "nodemon --exec 'npm run build'",
+    "watch": "nodemon --watch src --exec 'npm run build'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -32,6 +32,7 @@
     "eslint-plugin-standard": "^2.0.1",
     "node-static": "^0.7.9",
     "nodemon": "^1.11.0",
+    "react-disqus-thread": "^0.4.0",
     "standard": "^8.6.0"
   }
 }
