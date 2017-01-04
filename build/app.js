@@ -32007,20 +32007,15 @@ var _class = function (_React$Component) {
     key: 'render',
     value: function render() {
       var post = this.props.post;
-      var comments = !this.props.showComments ? _react2.default.createElement(
-        'a',
-        { className: 'post-meta', href: '/post/' + post._id },
-        post.comments.length,
-        ' comments'
-      ) : _react2.default.createElement(
+      var comments = !this.props.showComments ? _react2.default.createElement('div', null) : _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(_reactDisqusThread2.default, {
-          shortname: this.props.post.title,
-          identifier: this.props.post._id,
-          title: '{this.props.post.title} Thread',
+          shortname: 'cat-var-log-me',
+          identifier: 'cat-var-log-me',
+          title: this.props.title + ' Thread',
           url: window.location.href,
-          category_id: this.props.post._id,
+          category_id: 'cat-var-log-me',
           onNewComment: this.handleNewComment })
       );
 

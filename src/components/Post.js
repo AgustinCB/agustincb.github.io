@@ -9,14 +9,14 @@ export default class extends React.Component {
   render () {
     const post = this.props.post
     const comments = !this.props.showComments
-      ? (<a className="post-meta" href={`/post/${post._id}`}>{post.comments.length} comments</a>)
+      ? <div></div>
       : (<div>
           <ReactDisqusThread
-            shortname={this.props.post.title}
-            identifier={this.props.post._id}
-            title={`{this.props.post.title} Thread`}
+            shortname="cat-var-log-me"
+            identifier="cat-var-log-me"
+            title={`${this.props.title} Thread`}
             url={window.location.href}
-            category_id={this.props.post._id}
+            category_id="cat-var-log-me"
             onNewComment={this.handleNewComment}/>
         </div>)
 
