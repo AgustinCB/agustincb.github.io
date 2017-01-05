@@ -13,10 +13,9 @@ export default class extends React.Component {
       : (<div>
           <ReactDisqusThread
             shortname="cat-var-log-me"
-            identifier="cat-var-log-me"
-            title={`${this.props.title} Thread`}
+            identifier={this.props.post.title}
+            title={`${this.props.post.title} Thread`}
             url={window.location.href}
-            category_id="cat-var-log-me"
             onNewComment={this.handleNewComment}/>
         </div>)
 
