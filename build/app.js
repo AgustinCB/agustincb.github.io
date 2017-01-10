@@ -31839,7 +31839,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"./Sidebar":275,"react":238}],272:[function(require,module,exports){
+},{"./Sidebar":276,"react":238}],272:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -31960,6 +31960,52 @@ var _class = function (_React$Component) {
 exports.default = _class;
 
 },{"react":238}],274:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_React$Component) {
+  _inherits(_class, _React$Component);
+
+  function _class() {
+    _classCallCheck(this, _class);
+
+    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+  }
+
+  _createClass(_class, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "div",
+        { className: "loader" },
+        "Loading"
+      );
+    }
+  }]);
+
+  return _class;
+}(_react2.default.Component);
+
+exports.default = _class;
+
+},{"react":238}],275:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32067,7 +32113,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"./Comment":272,"./CommentEditor":273,"markdown":46,"react":238,"react-disqus-thread":53}],275:[function(require,module,exports){
+},{"./Comment":272,"./CommentEditor":273,"markdown":46,"react":238,"react-disqus-thread":53}],276:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32139,7 +32185,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"react":238}],276:[function(require,module,exports){
+},{"react":238}],277:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -32187,7 +32233,7 @@ var router = _react2.default.createElement(
 
 _reactDom2.default.render(router, document.getElementById('app'));
 
-},{"./components/App":271,"./pages/HomePage":277,"./pages/NotFoundPage":278,"./pages/PostPage":279,"react":238,"react-dom":54,"react-router":207}],277:[function(require,module,exports){
+},{"./components/App":271,"./pages/HomePage":278,"./pages/NotFoundPage":279,"./pages/PostPage":280,"react":238,"react-dom":54,"react-router":207}],278:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32211,6 +32257,10 @@ var _post4 = _interopRequireDefault(_post3);
 var _Post = require('../components/Post');
 
 var _Post2 = _interopRequireDefault(_Post);
+
+var _Loading = require('../components/Loading');
+
+var _Loading2 = _interopRequireDefault(_Loading);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32254,9 +32304,9 @@ var _class = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var posts = this.state.posts.map(function (post) {
+      var posts = this.state.posts ? this.state.posts.map(function (post) {
         return _react2.default.createElement(_Post2.default, { key: post._id, post: post, showComments: false });
-      });
+      }) : _react2.default.createElement(_Loading2.default, null);
       return _react2.default.createElement(
         'div',
         null,
@@ -32270,7 +32320,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"../actions/post":270,"../components/Post":274,"../stores/post":280,"react":238}],278:[function(require,module,exports){
+},{"../actions/post":270,"../components/Loading":274,"../components/Post":275,"../stores/post":281,"react":238}],279:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32316,7 +32366,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"react":238}],279:[function(require,module,exports){
+},{"react":238}],280:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32340,6 +32390,10 @@ var _post4 = _interopRequireDefault(_post3);
 var _Post = require('../components/Post');
 
 var _Post2 = _interopRequireDefault(_Post);
+
+var _Loading = require('../components/Loading');
+
+var _Loading2 = _interopRequireDefault(_Loading);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32382,7 +32436,7 @@ var _class = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (!this.state.post) return _react2.default.createElement('div', null);
+      if (!this.state.post) return _react2.default.createElement(_Loading2.default, null);
       return _react2.default.createElement(_Post2.default, { post: this.state.post, showComments: true });
     }
   }]);
@@ -32392,7 +32446,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"../actions/post":270,"../components/Post":274,"../stores/post":280,"react":238}],280:[function(require,module,exports){
+},{"../actions/post":270,"../components/Loading":274,"../components/Post":275,"../stores/post":281,"react":238}],281:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32439,7 +32493,7 @@ exports.default = _reflux2.default.createStore({
   }
 });
 
-},{"../actions/post":270,"../util/post":282,"reflux":256}],281:[function(require,module,exports){
+},{"../actions/post":270,"../util/post":283,"reflux":256}],282:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32498,7 +32552,7 @@ var del = exports.del = function del(pathname) {
   return promisifyRequest(_superagent2.default.del(url).query(params));
 };
 
-},{"../../config.json":1,"path":49,"superagent":260}],282:[function(require,module,exports){
+},{"../../config.json":1,"path":49,"superagent":260}],283:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32520,4 +32574,4 @@ var view = exports.view = function view(id) {
   return api.get('/post/' + id);
 };
 
-},{"./api":281}]},{},[276]);
+},{"./api":282}]},{},[277]);

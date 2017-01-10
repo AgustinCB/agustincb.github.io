@@ -3,6 +3,7 @@ import React from 'react'
 import PostActions from '../actions/post'
 import PostStore from '../stores/post'
 import Post from '../components/Post'
+import Loading from '../components/Loading'
 
 export default class extends React.Component {
   constructor () {
@@ -27,9 +28,11 @@ export default class extends React.Component {
   }
 
   render () {
-    const posts = this.state.posts.map((post) => {
-      return (<Post key={post._id} post={post} showComments={false} />)
-    })
+    const posts = this.state.posts
+      ? this.state.posts.map((post) =>
+        (<Post key={post._id} post={post} showComments={false} />)
+      )
+      : (<Loading />)
     return (
       <div>{posts}</div>
     )
