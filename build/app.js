@@ -32278,9 +32278,10 @@ var _class = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
-    _this.state = { posts: [] };
+    _this.state = { posts: [], page: 0 };
 
     _this.onPosts = _this.onPosts.bind(_this);
+    _this.loadMore = _this.loadMore.bind(_this);
     return _this;
   }
 
@@ -32296,10 +32297,18 @@ var _class = function (_React$Component) {
       this.unsubscribe();
     }
   }, {
+    key: 'loadMore',
+    value: function loadMore() {
+      _post2.default.all(this.state.page);
+    }
+  }, {
     key: 'onPosts',
-    value: function onPosts(err, posts) {
+    value: function onPosts(err, result) {
       if (err) return console.log(err);
-      this.setState({ posts: posts });
+      var page = this.state.page + 1;
+      var count = result.count;
+      var posts = this.state.posts.concat(result.posts);
+      this.setState({ page: page, posts: posts, count: count });
     }
   }, {
     key: 'render',
@@ -32307,10 +32316,16 @@ var _class = function (_React$Component) {
       var posts = this.state.posts ? this.state.posts.map(function (post) {
         return _react2.default.createElement(_Post2.default, { key: post._id, post: post, showComments: false });
       }) : _react2.default.createElement(_Loading2.default, null);
+      var nextPage = this.state.count - this.state.posts.length > 0 ? _react2.default.createElement(
+        'button',
+        { className: 'button-cta pure-button', onClick: this.loadMore },
+        'More'
+      ) : null;
       return _react2.default.createElement(
         'div',
         null,
-        posts
+        posts,
+        nextPage
       );
     }
   }]);
@@ -32480,7 +32495,9 @@ exports.default = _reflux2.default.createStore({
   getAll: function getAll() {
     var _this = this;
 
-    Post.all().then(function (res) {
+    var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+    Post.all(page).then(function (res) {
       return _this.trigger(null, res.body);
     }).catch(this.throwError);
   },
@@ -32567,7 +32584,9 @@ var api = _interopRequireWildcard(_api);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var all = exports.all = function all() {
-  return api.get('/post');
+  var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+  return api.get('/post?page=' + page);
 };
 
 var view = exports.view = function view(id) {

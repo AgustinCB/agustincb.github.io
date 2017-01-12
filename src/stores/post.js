@@ -15,8 +15,8 @@ export default Reflux.createStore({
     this.trigger(err)
   },
 
-  getAll () {
-    Post.all()
+  getAll (page = 0) {
+    Post.all(page)
       .then((res) => this.trigger(null, res.body))
       .catch(this.throwError)
   },
