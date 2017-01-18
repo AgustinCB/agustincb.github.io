@@ -4,7 +4,8 @@ import Reflux from 'reflux'
 
 const PostActions = Reflux.createActions([
   'all',
-  'view'
+  'view',
+  'search'
 ])
 
 export default PostActions

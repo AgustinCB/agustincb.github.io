@@ -7,3 +7,7 @@ export const all = (page = 0) => {
 export const view = (id) => {
   return api.get(`/post/${id}`)
 }
+
+export const search = (term, page = 0) => {
+  return api.get(`/search/${encodeURIComponent(term)}?page=${page}`)
+}

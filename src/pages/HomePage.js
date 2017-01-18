@@ -8,10 +8,11 @@ import Loading from '../components/Loading'
 export default class extends React.Component {
   constructor () {
     super()
-    this.state = { posts: [], page: 0 }
+    this.state = { posts: [], page: 0, search: false }
 
     this.onPosts = this.onPosts.bind(this)
 		this.loadMore = this.loadMore.bind(this)
+		this.search = this.search.bind(this)
   }
 
   componentDidMount () {
@@ -24,7 +25,16 @@ export default class extends React.Component {
   }
 
 	loadMore () {
+		if (this.state.search) {
+			return PostActions.search(this.state.search, this.state.page)
+		}
 		PostActions.all(this.state.page)
+	}
+
+	search () {
+		const search = this.refs.term.value
+		this.setState({ page: 0, search, posts: [] })
+		PostActions.search(search, 0)
 	}
 
   onPosts (err, result) {
@@ -44,8 +54,18 @@ export default class extends React.Component {
 		const nextPage = this.state.count - this.state.posts.length > 0
 			? (<button className="button-cta pure-button" onClick={this.loadMore}>More</button>)
 			: null
+
     return (
-      <div>{posts}{nextPage}</div>
+      <div>
+				<div className="search-bar">
+					<input type="text" placeholder="Search" className="search-input" ref="term" />
+					<button className="button-cta pure-button" onClick={this.search}>
+						Search
+					</button>
+				</div>
+				{posts}
+				{nextPage}
+			</div>
     )
   }
 }

@@ -31767,7 +31767,7 @@ var _reflux2 = _interopRequireDefault(_reflux);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var PostActions = _reflux2.default.createActions(['all', 'view']);
+var PostActions = _reflux2.default.createActions(['all', 'view', 'search']);
 
 exports.default = PostActions;
 
@@ -32237,7 +32237,7 @@ _reactDom2.default.render(router, document.getElementById('app'));
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+		value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -32271,66 +32271,88 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _class = function (_React$Component) {
-  _inherits(_class, _React$Component);
+		_inherits(_class, _React$Component);
 
-  function _class() {
-    _classCallCheck(this, _class);
+		function _class() {
+				_classCallCheck(this, _class);
 
-    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+				var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
-    _this.state = { posts: [], page: 0 };
+				_this.state = { posts: [], page: 0, search: false };
 
-    _this.onPosts = _this.onPosts.bind(_this);
-    _this.loadMore = _this.loadMore.bind(_this);
-    return _this;
-  }
+				_this.onPosts = _this.onPosts.bind(_this);
+				_this.loadMore = _this.loadMore.bind(_this);
+				_this.search = _this.search.bind(_this);
+				return _this;
+		}
 
-  _createClass(_class, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.unsubscribe = _post4.default.listen(this.onPosts);
-      _post2.default.all();
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.unsubscribe();
-    }
-  }, {
-    key: 'loadMore',
-    value: function loadMore() {
-      _post2.default.all(this.state.page);
-    }
-  }, {
-    key: 'onPosts',
-    value: function onPosts(err, result) {
-      if (err) return console.log(err);
-      var page = this.state.page + 1;
-      var count = result.count;
-      var posts = this.state.posts.concat(result.posts);
-      this.setState({ page: page, posts: posts, count: count });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var posts = this.state.posts ? this.state.posts.map(function (post) {
-        return _react2.default.createElement(_Post2.default, { key: post._id, post: post, showComments: false });
-      }) : _react2.default.createElement(_Loading2.default, null);
-      var nextPage = this.state.count - this.state.posts.length > 0 ? _react2.default.createElement(
-        'button',
-        { className: 'button-cta pure-button', onClick: this.loadMore },
-        'More'
-      ) : null;
-      return _react2.default.createElement(
-        'div',
-        null,
-        posts,
-        nextPage
-      );
-    }
-  }]);
+		_createClass(_class, [{
+				key: 'componentDidMount',
+				value: function componentDidMount() {
+						this.unsubscribe = _post4.default.listen(this.onPosts);
+						_post2.default.all();
+				}
+		}, {
+				key: 'componentWillUnmount',
+				value: function componentWillUnmount() {
+						this.unsubscribe();
+				}
+		}, {
+				key: 'loadMore',
+				value: function loadMore() {
+						if (this.state.search) {
+								return _post2.default.search(this.state.search, this.state.page);
+						}
+						_post2.default.all(this.state.page);
+				}
+		}, {
+				key: 'search',
+				value: function search() {
+						var search = this.refs.term.value;
+						this.setState({ page: 0, search: search, posts: [] });
+						_post2.default.search(search, 0);
+				}
+		}, {
+				key: 'onPosts',
+				value: function onPosts(err, result) {
+						if (err) return console.log(err);
+						var page = this.state.page + 1;
+						var count = result.count;
+						var posts = this.state.posts.concat(result.posts);
+						this.setState({ page: page, posts: posts, count: count });
+				}
+		}, {
+				key: 'render',
+				value: function render() {
+						var posts = this.state.posts ? this.state.posts.map(function (post) {
+								return _react2.default.createElement(_Post2.default, { key: post._id, post: post, showComments: false });
+						}) : _react2.default.createElement(_Loading2.default, null);
+						var nextPage = this.state.count - this.state.posts.length > 0 ? _react2.default.createElement(
+								'button',
+								{ className: 'button-cta pure-button', onClick: this.loadMore },
+								'More'
+						) : null;
 
-  return _class;
+						return _react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement(
+										'div',
+										{ className: 'search-bar' },
+										_react2.default.createElement('input', { type: 'text', placeholder: 'Search', className: 'search-input', ref: 'term' }),
+										_react2.default.createElement(
+												'button',
+												{ className: 'button-cta pure-button', onClick: this.search },
+												'Search'
+										)
+								),
+								posts,
+								nextPage
+						);
+				}
+		}]);
+
+		return _class;
 }(_react2.default.Component);
 
 exports.default = _class;
@@ -32488,6 +32510,7 @@ exports.default = _reflux2.default.createStore({
   init: function init() {
     this.listenTo(_post2.default.all, this.getAll);
     this.listenTo(_post2.default.view, this.getPost);
+    this.listenTo(_post2.default.search, this.getSearch);
   },
   throwError: function throwError(err) {
     this.trigger(err);
@@ -32501,11 +32524,20 @@ exports.default = _reflux2.default.createStore({
       return _this.trigger(null, res.body);
     }).catch(this.throwError);
   },
-  getPost: function getPost(id) {
+  getSearch: function getSearch(term) {
     var _this2 = this;
 
-    Post.view(id).then(function (res) {
+    var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+    Post.search(term, page).then(function (res) {
       return _this2.trigger(null, res.body);
+    }).catch(this.throwError);
+  },
+  getPost: function getPost(id) {
+    var _this3 = this;
+
+    Post.view(id).then(function (res) {
+      return _this3.trigger(null, res.body);
     }).catch(this.throwError);
   }
 });
@@ -32575,7 +32607,7 @@ var del = exports.del = function del(pathname) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.view = exports.all = undefined;
+exports.search = exports.view = exports.all = undefined;
 
 var _api = require('./api');
 
@@ -32591,6 +32623,12 @@ var all = exports.all = function all() {
 
 var view = exports.view = function view(id) {
   return api.get('/post/' + id);
+};
+
+var search = exports.search = function search(term) {
+  var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+  return api.get('/search/' + encodeURIComponent(term) + '?page=' + page);
 };
 
 },{"./api":282}]},{},[277]);

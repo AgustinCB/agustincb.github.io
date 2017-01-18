@@ -9,6 +9,7 @@ export default Reflux.createStore({
   init () {
     this.listenTo(PostActions.all, this.getAll)
     this.listenTo(PostActions.view, this.getPost)
+    this.listenTo(PostActions.search, this.getSearch)
   },
 
   throwError (err) {
@@ -17,6 +18,12 @@ export default Reflux.createStore({
 
   getAll (page = 0) {
     Post.all(page)
+      .then((res) => this.trigger(null, res.body))
+      .catch(this.throwError)
+  },
+
+  getSearch (term, page = 0) {
+    Post.search(term, page)
       .then((res) => this.trigger(null, res.body))
       .catch(this.throwError)
   },
