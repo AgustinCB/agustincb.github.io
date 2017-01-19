@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 import {markdown as md} from 'markdown'
 
 import Comment from './Comment'
@@ -23,7 +24,7 @@ export default class extends React.Component {
       <section className="post">
         <header className="post-header">
           <img width="48" height="48" alt={`${post.author.username}'s avatar`} className="post-avatar" src="http://2.gravatar.com/avatar/81f8e116302db3b8643873eda3109f2e" />
-          <h2><a href={`/post/${post._id}`}>{post.title}</a></h2>
+          <h2><Link to={`/post/${post._id}`}>{post.title}</Link></h2>
           <p className="post-meta">By <a className="post-author">{post.author.username}</a> under <a className="post-category">Uncategorized</a></p>
         </header>
         <div className="post-description"

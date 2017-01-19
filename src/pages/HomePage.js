@@ -2,8 +2,7 @@ import React from 'react'
 
 import PostActions from '../actions/post'
 import PostStore from '../stores/post'
-import Post from '../components/Post'
-import Loading from '../components/Loading'
+import PostList from '../components/PostList'
 
 export default class extends React.Component {
   constructor () {
@@ -13,6 +12,7 @@ export default class extends React.Component {
     this.onPosts = this.onPosts.bind(this)
 		this.loadMore = this.loadMore.bind(this)
 		this.search = this.search.bind(this)
+		this.handleKeyPress = this.handleKeyPress.bind(this)
   }
 
   componentDidMount () {
@@ -23,6 +23,12 @@ export default class extends React.Component {
   componentWillUnmount () {
     this.unsubscribe()
   }
+
+	handleKeyPress (evt) {
+		if (evt.key === 'Enter') {
+			this.search()
+		}
+	}
 
 	loadMore () {
 		if (this.state.search) {
@@ -46,11 +52,7 @@ export default class extends React.Component {
   }
 
   render () {
-    const posts = this.state.posts
-      ? this.state.posts.map((post) =>
-        (<Post key={post._id} post={post} showComments={false} />)
-      )
-      : (<Loading />)
+		console.log(this)
 		const nextPage = this.state.count - this.state.posts.length > 0
 			? (<button className="button-cta pure-button" onClick={this.loadMore}>More</button>)
 			: null
@@ -58,12 +60,9 @@ export default class extends React.Component {
     return (
       <div>
 				<div className="search-bar">
-					<input type="text" placeholder="Search" className="search-input" ref="term" />
-					<button className="button-cta pure-button" onClick={this.search}>
-						Search
-					</button>
+					<input type="text" placeholder="Search" className="search-input" ref="term" onKeyPress={this.handleKeyPress} />
 				</div>
-				{posts}
+				<PostList posts={this.state.posts} />
 				{nextPage}
 			</div>
     )

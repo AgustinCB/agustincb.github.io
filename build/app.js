@@ -31839,7 +31839,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"./Sidebar":276,"react":238}],272:[function(require,module,exports){
+},{"./Sidebar":277,"react":238}],272:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32018,6 +32018,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouter = require('react-router');
+
 var _markdown = require('markdown');
 
 var _Comment = require('./Comment');
@@ -32075,8 +32077,8 @@ var _class = function (_React$Component) {
             'h2',
             null,
             _react2.default.createElement(
-              'a',
-              { href: '/post/' + post._id },
+              _reactRouter.Link,
+              { to: '/post/' + post._id },
               post.title
             )
           ),
@@ -32113,8 +32115,8 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"./Comment":272,"./CommentEditor":273,"markdown":46,"react":238,"react-disqus-thread":53}],276:[function(require,module,exports){
-"use strict";
+},{"./Comment":272,"./CommentEditor":273,"markdown":46,"react":238,"react-disqus-thread":53,"react-router":207}],276:[function(require,module,exports){
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -32122,9 +32124,71 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _Post = require('../components/Post');
+
+var _Post2 = _interopRequireDefault(_Post);
+
+var _Loading = require('../components/Loading');
+
+var _Loading2 = _interopRequireDefault(_Loading);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_React$Component) {
+  _inherits(_class, _React$Component);
+
+  function _class() {
+    _classCallCheck(this, _class);
+
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+
+    _this.state = { posts: [] };
+    return _this;
+  }
+
+  _createClass(_class, [{
+    key: 'render',
+    value: function render() {
+      var posts = this.props.posts ? this.props.posts.map(function (post) {
+        return _react2.default.createElement(_Post2.default, { key: post._id, post: post, showComments: false });
+      }) : _react2.default.createElement(_Loading2.default, null);
+      return _react2.default.createElement(
+        'div',
+        null,
+        posts
+      );
+    }
+  }]);
+
+  return _class;
+}(_react2.default.Component);
+
+exports.default = _class;
+
+},{"../components/Loading":274,"../components/Post":275,"react":238}],277:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32144,35 +32208,35 @@ var _class = function (_React$Component) {
   }
 
   _createClass(_class, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        "div",
-        { className: "sidebar pure-u-1 pure-u-md-1-4" },
+        'div',
+        { className: 'sidebar pure-u-1 pure-u-md-1-4' },
         _react2.default.createElement(
-          "div",
-          { className: "header" },
+          'div',
+          { className: 'header' },
           _react2.default.createElement(
-            "a",
-            { href: "/" },
+            _reactRouter.Link,
+            { to: '/' },
             _react2.default.createElement(
-              "h1",
-              { className: "brand-title" },
-              "cat /var/log/me"
+              'h1',
+              { className: 'brand-title' },
+              'cat /var/log/me'
             )
           ),
           _react2.default.createElement(
-            "h2",
-            { className: "brand-tagline" },
-            "AgustinCB's computing adventures"
+            'h2',
+            { className: 'brand-tagline' },
+            'AgustinCB\'s computing adventures'
           ),
           _react2.default.createElement(
-            "div",
+            'div',
             null,
             _react2.default.createElement(
-              "a",
-              { href: "http://github.com/AgustinCB", target: "_blank", className: "pure-button blog-button" },
-              "GitHub"
+              'a',
+              { href: 'http://github.com/AgustinCB', target: '_blank', className: 'pure-button blog-button' },
+              'GitHub'
             )
           )
         )
@@ -32185,7 +32249,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"react":238}],277:[function(require,module,exports){
+},{"react":238,"react-router":207}],278:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -32233,11 +32297,11 @@ var router = _react2.default.createElement(
 
 _reactDom2.default.render(router, document.getElementById('app'));
 
-},{"./components/App":271,"./pages/HomePage":278,"./pages/NotFoundPage":279,"./pages/PostPage":280,"react":238,"react-dom":54,"react-router":207}],278:[function(require,module,exports){
+},{"./components/App":271,"./pages/HomePage":279,"./pages/NotFoundPage":280,"./pages/PostPage":281,"react":238,"react-dom":54,"react-router":207}],279:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-		value: true
+	value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -32254,13 +32318,9 @@ var _post3 = require('../stores/post');
 
 var _post4 = _interopRequireDefault(_post3);
 
-var _Post = require('../components/Post');
+var _PostList = require('../components/PostList');
 
-var _Post2 = _interopRequireDefault(_Post);
-
-var _Loading = require('../components/Loading');
-
-var _Loading2 = _interopRequireDefault(_Loading);
+var _PostList2 = _interopRequireDefault(_PostList);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32271,93 +32331,94 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _class = function (_React$Component) {
-		_inherits(_class, _React$Component);
+	_inherits(_class, _React$Component);
 
-		function _class() {
-				_classCallCheck(this, _class);
+	function _class() {
+		_classCallCheck(this, _class);
 
-				var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+		var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
-				_this.state = { posts: [], page: 0, search: false };
+		_this.state = { posts: [], page: 0, search: false };
 
-				_this.onPosts = _this.onPosts.bind(_this);
-				_this.loadMore = _this.loadMore.bind(_this);
-				_this.search = _this.search.bind(_this);
-				return _this;
+		_this.onPosts = _this.onPosts.bind(_this);
+		_this.loadMore = _this.loadMore.bind(_this);
+		_this.search = _this.search.bind(_this);
+		_this.handleKeyPress = _this.handleKeyPress.bind(_this);
+		return _this;
+	}
+
+	_createClass(_class, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			this.unsubscribe = _post4.default.listen(this.onPosts);
+			_post2.default.all();
 		}
+	}, {
+		key: 'componentWillUnmount',
+		value: function componentWillUnmount() {
+			this.unsubscribe();
+		}
+	}, {
+		key: 'handleKeyPress',
+		value: function handleKeyPress(evt) {
+			if (evt.key === 'Enter') {
+				this.search();
+			}
+		}
+	}, {
+		key: 'loadMore',
+		value: function loadMore() {
+			if (this.state.search) {
+				return _post2.default.search(this.state.search, this.state.page);
+			}
+			_post2.default.all(this.state.page);
+		}
+	}, {
+		key: 'search',
+		value: function search() {
+			var search = this.refs.term.value;
+			this.setState({ page: 0, search: search, posts: [] });
+			_post2.default.search(search, 0);
+		}
+	}, {
+		key: 'onPosts',
+		value: function onPosts(err, result) {
+			if (err) return console.log(err);
+			var page = this.state.page + 1;
+			var count = result.count;
+			var posts = this.state.posts.concat(result.posts);
+			this.setState({ page: page, posts: posts, count: count });
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			console.log(this);
+			var nextPage = this.state.count - this.state.posts.length > 0 ? _react2.default.createElement(
+				'button',
+				{ className: 'button-cta pure-button', onClick: this.loadMore },
+				'More'
+			) : null;
 
-		_createClass(_class, [{
-				key: 'componentDidMount',
-				value: function componentDidMount() {
-						this.unsubscribe = _post4.default.listen(this.onPosts);
-						_post2.default.all();
-				}
-		}, {
-				key: 'componentWillUnmount',
-				value: function componentWillUnmount() {
-						this.unsubscribe();
-				}
-		}, {
-				key: 'loadMore',
-				value: function loadMore() {
-						if (this.state.search) {
-								return _post2.default.search(this.state.search, this.state.page);
-						}
-						_post2.default.all(this.state.page);
-				}
-		}, {
-				key: 'search',
-				value: function search() {
-						var search = this.refs.term.value;
-						this.setState({ page: 0, search: search, posts: [] });
-						_post2.default.search(search, 0);
-				}
-		}, {
-				key: 'onPosts',
-				value: function onPosts(err, result) {
-						if (err) return console.log(err);
-						var page = this.state.page + 1;
-						var count = result.count;
-						var posts = this.state.posts.concat(result.posts);
-						this.setState({ page: page, posts: posts, count: count });
-				}
-		}, {
-				key: 'render',
-				value: function render() {
-						var posts = this.state.posts ? this.state.posts.map(function (post) {
-								return _react2.default.createElement(_Post2.default, { key: post._id, post: post, showComments: false });
-						}) : _react2.default.createElement(_Loading2.default, null);
-						var nextPage = this.state.count - this.state.posts.length > 0 ? _react2.default.createElement(
-								'button',
-								{ className: 'button-cta pure-button', onClick: this.loadMore },
-								'More'
-						) : null;
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'div',
+					{ className: 'search-bar' },
+					_react2.default.createElement('input', { type: 'text', placeholder: 'Search', className: 'search-input', ref: 'term', onKeyPress: this.handleKeyPress })
+				),
+				_react2.default.createElement(_PostList2.default, { posts: this.state.posts }),
+				nextPage
+			);
+		}
+	}]);
 
-						return _react2.default.createElement(
-								'div',
-								null,
-								_react2.default.createElement(
-										'div',
-										{ className: 'search-bar' },
-										_react2.default.createElement('input', { type: 'text', placeholder: 'Search', className: 'search-input', ref: 'term' }),
-										_react2.default.createElement(
-												'button',
-												{ className: 'button-cta pure-button', onClick: this.search },
-												'Search'
-										)
-								),
-								posts,
-								nextPage
-						);
-				}
-		}]);
-
-		return _class;
+	return _class;
 }(_react2.default.Component);
 
 exports.default = _class;
 
-},{"../actions/post":270,"../components/Loading":274,"../components/Post":275,"../stores/post":281,"react":238}],279:[function(require,module,exports){
+},{"../actions/post":270,"../components/PostList":276,"../stores/post":282,"react":238}],280:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32403,7 +32464,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"react":238}],280:[function(require,module,exports){
+},{"react":238}],281:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32483,7 +32544,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"../actions/post":270,"../components/Loading":274,"../components/Post":275,"../stores/post":281,"react":238}],281:[function(require,module,exports){
+},{"../actions/post":270,"../components/Loading":274,"../components/Post":275,"../stores/post":282,"react":238}],282:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32542,7 +32603,7 @@ exports.default = _reflux2.default.createStore({
   }
 });
 
-},{"../actions/post":270,"../util/post":283,"reflux":256}],282:[function(require,module,exports){
+},{"../actions/post":270,"../util/post":284,"reflux":256}],283:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32601,7 +32662,7 @@ var del = exports.del = function del(pathname) {
   return promisifyRequest(_superagent2.default.del(url).query(params));
 };
 
-},{"../../config.json":1,"path":49,"superagent":260}],283:[function(require,module,exports){
+},{"../../config.json":1,"path":49,"superagent":260}],284:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32631,4 +32692,4 @@ var search = exports.search = function search(term) {
   return api.get('/search/' + encodeURIComponent(term) + '?page=' + page);
 };
 
-},{"./api":282}]},{},[277]);
+},{"./api":283}]},{},[278]);

@@ -193,9 +193,16 @@ p:has(code) {
 .search-input {
   margin-right: 10px;
   display: inline-block;
-  border-radius: 3px;
   padding: 5px;
   vertical-align: bottom;
+  border: none;
+  box-shadow: 0px 0.1px rgb(61, 79, 93);
+  width: 30em;
+}
+
+.search-input:focus {
+  box-shadow: 0px 2px rgb(61, 79, 93);
+  outline: none;
 }
 
 /* Loader */
