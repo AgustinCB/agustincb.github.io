@@ -10,29 +10,36 @@ export default class extends React.Component {
     this.state = { posts: [], page: 0 }
 
     this.onPosts = this.onPosts.bind(this)
-		this.loadMore = this.loadMore.bind(this)
   }
 
   componentDidMount () {
     this.unsubscribe = PostStore.listen(this.onPosts)
-    PostActions.all()
+    PostActions.search(this.props.params.term)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.params.term !== this.props.params.term) {
+      PostActions.search(this.props.params.term)
+    }
   }
 
   componentWillUnmount () {
     this.unsubscribe()
   }
 
-	loadMore () {
-		PostActions.all(this.state.page)
-	}
-
   onPosts (err, result) {
     if (err) return console.log(err)
-		const page = this.state.page + 1;
+		const page = parseInt(result.page) + 1;
 		const count = result.count
-		const posts = this.state.posts.concat(result.posts)
+		const posts = parseInt(result.page) === 0
+      ? result.posts
+      : this.state.posts.concat(result.posts)
 		this.setState({ page, posts, count })
   }
+
+	loadMore () {
+	  return PostActions.search(this.state.search, this.state.page)
+	}
 
   render () {
 		const nextPage = this.state.count - this.state.posts.length > 0

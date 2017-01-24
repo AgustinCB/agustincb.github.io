@@ -5,6 +5,7 @@ import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import App from './components/App'
 import HomePage from './pages/HomePage'
 import PostPage from './pages/PostPage'
+import SearchPage from './pages/SearchPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 const router = (
@@ -16,6 +17,8 @@ const router = (
       <Route path="/" component={HomePage} />
       <Route path="post/:id" component={PostPage} />
       <Route path="post/:id/" component={PostPage} />
+      <Route path="search/:term/" component={SearchPage} />
+      <Route path="search/:term" component={SearchPage} />
 
       <Route path="*" component={HomePage} />
     </Route>

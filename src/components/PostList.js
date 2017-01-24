@@ -10,7 +10,7 @@ export default class extends React.Component {
   }
 
   render () {
-    const posts = this.props.posts
+    const posts = this.props.posts.length
       ? this.props.posts.map((post) =>
         (<Post key={post._id} post={post} showComments={false} />)
       )
