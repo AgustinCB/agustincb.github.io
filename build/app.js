@@ -31767,7 +31767,7 @@ var _reflux2 = _interopRequireDefault(_reflux);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var PostActions = _reflux2.default.createActions(['all', 'view', 'search']);
+var PostActions = _reflux2.default.createActions(['all', 'view', 'search', 'category']);
 
 exports.default = PostActions;
 
@@ -32098,9 +32098,9 @@ var _class = function (_React$Component) {
             ),
             ' under ',
             _react2.default.createElement(
-              'a',
-              { className: 'post-category' },
-              'Uncategorized'
+              _reactRouter.Link,
+              { to: '/category/' + post.category, className: 'post-category' },
+              post.category ? post.category : 'Uncategorized'
             )
           )
         ),
@@ -32346,6 +32346,10 @@ var _SearchPage = require('./pages/SearchPage');
 
 var _SearchPage2 = _interopRequireDefault(_SearchPage);
 
+var _CategoryPage = require('./pages/CategoryPage');
+
+var _CategoryPage2 = _interopRequireDefault(_CategoryPage);
+
 var _NotFoundPage = require('./pages/NotFoundPage');
 
 var _NotFoundPage2 = _interopRequireDefault(_NotFoundPage);
@@ -32365,13 +32369,117 @@ var router = _react2.default.createElement(
     _react2.default.createElement(_reactRouter.Route, { path: 'post/:id/', component: _PostPage2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: 'search/:term/', component: _SearchPage2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: 'search/:term', component: _SearchPage2.default }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'category/:category/', component: _CategoryPage2.default }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'category/:category', component: _CategoryPage2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: '*', component: _HomePage2.default })
   )
 );
 
 _reactDom2.default.render(router, document.getElementById('app'));
 
-},{"./components/App":271,"./pages/HomePage":280,"./pages/NotFoundPage":281,"./pages/PostPage":282,"./pages/SearchPage":283,"react":238,"react-dom":54,"react-router":207}],280:[function(require,module,exports){
+},{"./components/App":271,"./pages/CategoryPage":280,"./pages/HomePage":281,"./pages/NotFoundPage":282,"./pages/PostPage":283,"./pages/SearchPage":284,"react":238,"react-dom":54,"react-router":207}],280:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _post = require('../actions/post');
+
+var _post2 = _interopRequireDefault(_post);
+
+var _post3 = require('../stores/post');
+
+var _post4 = _interopRequireDefault(_post3);
+
+var _PostList = require('../components/PostList');
+
+var _PostList2 = _interopRequireDefault(_PostList);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_React$Component) {
+  _inherits(_class, _React$Component);
+
+  function _class() {
+    _classCallCheck(this, _class);
+
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+
+    _this.state = { posts: [], page: 0 };
+
+    _this.onPosts = _this.onPosts.bind(_this);
+    return _this;
+  }
+
+  _createClass(_class, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.unsubscribe = _post4.default.listen(this.onPosts);
+      _post2.default.category(this.props.params.category);
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.params.category !== this.props.params.category) {
+        _post2.default.category(this.props.params.category);
+      }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.unsubscribe();
+    }
+  }, {
+    key: 'onPosts',
+    value: function onPosts(err, result) {
+      if (err) return console.log(err);
+      var page = parseInt(result.page) + 1;
+      var count = result.count;
+      var posts = parseInt(result.page) === 0 ? result.posts : this.state.posts.concat(result.posts);
+      this.setState({ page: page, posts: posts, count: count });
+    }
+  }, {
+    key: 'loadMore',
+    value: function loadMore() {
+      return _post2.default.category(this.props.params.category, this.state.page);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var nextPage = this.state.count - this.state.posts.length > 0 ? _react2.default.createElement(
+        'button',
+        { className: 'button-cta pure-button', onClick: this.loadMore },
+        'More'
+      ) : null;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_PostList2.default, { posts: this.state.posts }),
+        nextPage
+      );
+    }
+  }]);
+
+  return _class;
+}(_react2.default.Component);
+
+exports.default = _class;
+
+},{"../actions/post":270,"../components/PostList":276,"../stores/post":285,"react":238}],281:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32467,7 +32575,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"../actions/post":270,"../components/PostList":276,"../stores/post":284,"react":238}],281:[function(require,module,exports){
+},{"../actions/post":270,"../components/PostList":276,"../stores/post":285,"react":238}],282:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32513,7 +32621,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"react":238}],282:[function(require,module,exports){
+},{"react":238}],283:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32593,7 +32701,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"../actions/post":270,"../components/Loading":274,"../components/Post":275,"../stores/post":284,"react":238}],283:[function(require,module,exports){
+},{"../actions/post":270,"../components/Loading":274,"../components/Post":275,"../stores/post":285,"react":238}],284:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32695,7 +32803,7 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"../actions/post":270,"../components/PostList":276,"../stores/post":284,"react":238}],284:[function(require,module,exports){
+},{"../actions/post":270,"../components/PostList":276,"../stores/post":285,"react":238}],285:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32723,6 +32831,7 @@ exports.default = _reflux2.default.createStore({
     this.listenTo(_post2.default.all, this.getAll);
     this.listenTo(_post2.default.view, this.getPost);
     this.listenTo(_post2.default.search, this.getSearch);
+    this.listenTo(_post2.default.category, this.getCategory);
   },
   throwError: function throwError(err) {
     this.trigger(err);
@@ -32745,16 +32854,25 @@ exports.default = _reflux2.default.createStore({
       return _this2.trigger(null, res.body);
     }).catch(this.throwError);
   },
-  getPost: function getPost(id) {
+  getCategory: function getCategory(category) {
     var _this3 = this;
 
-    Post.view(id).then(function (res) {
+    var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+    Post.category(category, page).then(function (res) {
       return _this3.trigger(null, res.body);
+    }).catch(this.throwError);
+  },
+  getPost: function getPost(id) {
+    var _this4 = this;
+
+    Post.view(id).then(function (res) {
+      return _this4.trigger(null, res.body);
     }).catch(this.throwError);
   }
 });
 
-},{"../actions/post":270,"../util/post":286,"reflux":256}],285:[function(require,module,exports){
+},{"../actions/post":270,"../util/post":287,"reflux":256}],286:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32813,13 +32931,13 @@ var del = exports.del = function del(pathname) {
   return promisifyRequest(_superagent2.default.del(url).query(params));
 };
 
-},{"../../config.json":1,"path":49,"superagent":260}],286:[function(require,module,exports){
+},{"../../config.json":1,"path":49,"superagent":260}],287:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.search = exports.view = exports.all = undefined;
+exports.category = exports.search = exports.view = exports.all = undefined;
 
 var _api = require('./api');
 
@@ -32843,4 +32961,10 @@ var search = exports.search = function search(term) {
   return api.get('/search/' + encodeURIComponent(term) + '?page=' + page);
 };
 
-},{"./api":285}]},{},[279]);
+var category = exports.category = function category(_category) {
+  var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+  return api.get('/category/' + encodeURIComponent(_category) + '?page=' + page);
+};
+
+},{"./api":286}]},{},[279]);

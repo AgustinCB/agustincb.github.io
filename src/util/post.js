@@ -11,3 +11,7 @@ export const view = (id) => {
 export const search = (term, page = 0) => {
   return api.get(`/search/${encodeURIComponent(term)}?page=${page}`)
 }
+
+export const category = (category, page = 0) => {
+  return api.get(`/category/${encodeURIComponent(category)}?page=${page}`)
+}
