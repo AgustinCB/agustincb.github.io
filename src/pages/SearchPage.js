@@ -18,7 +18,7 @@ export default class extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-		document.title = `Search ${this.props.params.term}`
+    document.title = `Search ${this.props.params.term}`
     if (prevProps.params.term !== this.props.params.term) {
       PostActions.search(this.props.params.term)
     }
@@ -30,28 +30,28 @@ export default class extends React.Component {
 
   onPosts (err, result) {
     if (err) return console.log(err)
-		const page = parseInt(result.page) + 1;
-		const count = result.count
-		const posts = parseInt(result.page) === 0
+    const page = parseInt(result.page) + 1;
+    const count = result.count
+    const posts = parseInt(result.page) === 0
       ? result.posts
       : this.state.posts.concat(result.posts)
-		this.setState({ page, posts, count })
+    this.setState({ page, posts, count })
   }
 
-	loadMore () {
-	  return PostActions.search(this.state.search, this.state.page)
-	}
+  loadMore () {
+    return PostActions.search(this.state.search, this.state.page)
+  }
 
   render () {
-		const nextPage = this.state.count - this.state.posts.length > 0
-			? (<button className="button-cta pure-button" onClick={this.loadMore}>More</button>)
-			: null
+    const nextPage = this.state.count - this.state.posts.length > 0
+      ? (<button className="button-cta pure-button" onClick={this.loadMore}>More</button>)
+      : null
 
     return (
       <div>
-				<PostList posts={this.state.posts} />
-				{nextPage}
-			</div>
+        <PostList posts={this.state.posts} />
+        {nextPage}
+      </div>
     )
   }
 }

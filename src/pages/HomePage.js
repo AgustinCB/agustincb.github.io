@@ -10,11 +10,11 @@ export default class extends React.Component {
     this.state = { posts: [], page: 0 }
 
     this.onPosts = this.onPosts.bind(this)
-		this.loadMore = this.loadMore.bind(this)
+    this.loadMore = this.loadMore.bind(this)
   }
 
   componentDidMount () {
-		document.title = 'AgustinCB\'s computing adventures'
+    document.title = 'AgustinCB\'s computing adventures'
     this.unsubscribe = PostStore.listen(this.onPosts)
     PostActions.all()
   }
@@ -23,28 +23,28 @@ export default class extends React.Component {
     this.unsubscribe()
   }
 
-	loadMore () {
-		PostActions.all(this.state.page)
-	}
+  loadMore () {
+    PostActions.all(this.state.page)
+  }
 
   onPosts (err, result) {
     if (err) return console.log(err)
-		const page = this.state.page + 1;
-		const count = result.count
-		const posts = this.state.posts.concat(result.posts)
-		this.setState({ page, posts, count })
+    const page = this.state.page + 1;
+    const count = result.count
+    const posts = this.state.posts.concat(result.posts)
+    this.setState({ page, posts, count })
   }
 
   render () {
-		const nextPage = this.state.count - this.state.posts.length > 0
-			? (<button className="button-cta pure-button" onClick={this.loadMore}>More</button>)
-			: null
+    const nextPage = this.state.count - this.state.posts.length > 0
+      ? (<button className="button-cta pure-button" onClick={this.loadMore}>More</button>)
+      : null
 
     return (
       <div>
-				<PostList posts={this.state.posts} />
-				{nextPage}
-			</div>
+        <PostList posts={this.state.posts} />
+        {nextPage}
+      </div>
     )
   }
 }

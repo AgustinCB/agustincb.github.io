@@ -13,7 +13,7 @@ export default class extends React.Component {
   }
 
   componentDidMount () {
-		document.title = `${this.props.params.category} category`
+    document.title = `${this.props.params.category} category`
     this.unsubscribe = PostStore.listen(this.onPosts)
     PostActions.category(this.props.params.category)
   }
@@ -30,28 +30,28 @@ export default class extends React.Component {
 
   onPosts (err, result) {
     if (err) return console.log(err)
-		const page = parseInt(result.page) + 1;
-		const count = result.count
-		const posts = parseInt(result.page) === 0
+    const page = parseInt(result.page) + 1;
+    const count = result.count
+    const posts = parseInt(result.page) === 0
       ? result.posts
       : this.state.posts.concat(result.posts)
-		this.setState({ page, posts, count })
+    this.setState({ page, posts, count })
   }
 
-	loadMore () {
-	  return PostActions.category(this.props.params.category, this.state.page)
-	}
+  loadMore () {
+    return PostActions.category(this.props.params.category, this.state.page)
+  }
 
   render () {
-		const nextPage = this.state.count - this.state.posts.length > 0
-			? (<button className="button-cta pure-button" onClick={this.loadMore}>More</button>)
-			: null
+    const nextPage = this.state.count - this.state.posts.length > 0
+      ? (<button className="button-cta pure-button" onClick={this.loadMore}>More</button>)
+      : null
 
     return (
       <div>
-				<PostList posts={this.state.posts} />
-				{nextPage}
-			</div>
+        <PostList posts={this.state.posts} />
+        {nextPage}
+      </div>
     )
   }
 }
