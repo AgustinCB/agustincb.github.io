@@ -14,6 +14,7 @@ export default class extends React.Component {
   }
 
   componentDidMount () {
+		document.title = this.props.params.id
     this.unsubscribe = PostStore.listen(this.onPost)
     PostActions.view(this.props.params.id)
   }

@@ -32083,7 +32083,7 @@ var _class = function (_React$Component) {
             null,
             _react2.default.createElement(
               _reactRouter.Link,
-              { to: '/post/' + post._id },
+              { to: '/post/' + encodeURIComponent(post.title) },
               post.title
             )
           ),
@@ -32427,6 +32427,7 @@ var _class = function (_React$Component) {
   _createClass(_class, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      document.title = this.props.params.category + ' category';
       this.unsubscribe = _post4.default.listen(this.onPosts);
       _post2.default.category(this.props.params.category);
     }
@@ -32530,6 +32531,7 @@ var _class = function (_React$Component) {
   _createClass(_class, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      document.title = 'AgustinCB\'s computing adventures';
       this.unsubscribe = _post4.default.listen(this.onPosts);
       _post2.default.all();
     }
@@ -32675,6 +32677,7 @@ var _class = function (_React$Component) {
   _createClass(_class, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      document.title = this.props.params.id;
       this.unsubscribe = _post4.default.listen(this.onPost);
       _post2.default.view(this.props.params.id);
     }
@@ -32757,6 +32760,7 @@ var _class = function (_React$Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps) {
+      document.title = 'Search ' + this.props.params.term;
       if (prevProps.params.term !== this.props.params.term) {
         _post2.default.search(this.props.params.term);
       }

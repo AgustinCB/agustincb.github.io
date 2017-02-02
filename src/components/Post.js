@@ -24,7 +24,7 @@ export default class extends React.Component {
       <section className="post">
         <header className="post-header">
           <img width="48" height="48" alt={`${post.author.username}'s avatar`} className="post-avatar" src="http://2.gravatar.com/avatar/81f8e116302db3b8643873eda3109f2e" />
-          <h2><Link to={`/post/${post._id}`}>{post.title}</Link></h2>
+          <h2><Link to={`/post/${encodeURIComponent(post.title)}`}>{post.title}</Link></h2>
           <p className="post-meta">By <a className="post-author">{post.author.username}</a> under <Link to={`/category/${post.category}`} className="post-category">{post.category ? post.category : 'Uncategorized'}</Link></p>
         </header>
         <div className="post-description"

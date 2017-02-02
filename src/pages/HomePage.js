@@ -14,6 +14,7 @@ export default class extends React.Component {
   }
 
   componentDidMount () {
+		document.title = 'AgustinCB\'s computing adventures'
     this.unsubscribe = PostStore.listen(this.onPosts)
     PostActions.all()
   }

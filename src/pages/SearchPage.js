@@ -18,6 +18,7 @@ export default class extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+		document.title = `Search ${this.props.params.term}`
     if (prevProps.params.term !== this.props.params.term) {
       PostActions.search(this.props.params.term)
     }

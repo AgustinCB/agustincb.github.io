@@ -13,6 +13,7 @@ export default class extends React.Component {
   }
 
   componentDidMount () {
+		document.title = `${this.props.params.category} category`
     this.unsubscribe = PostStore.listen(this.onPosts)
     PostActions.category(this.props.params.category)
   }
