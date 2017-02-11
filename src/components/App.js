@@ -20,10 +20,10 @@ export default class extends React.Component {
     return (
       <div id="layout" className="pure-g">
         <Sidebar />
-        <div className="content pure-u-1 pure-u-md-3-4">
+        <main className="content pure-u-1 pure-u-md-3-4">
           <SearchBar history={this.props.router} />
           {this.renderChildren()}
-        </div>
+        </main>
       </div>
     )
   }

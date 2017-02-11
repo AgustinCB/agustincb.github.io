@@ -31830,7 +31830,7 @@ var _class = function (_React$Component) {
         { id: 'layout', className: 'pure-g' },
         _react2.default.createElement(_Sidebar2.default, null),
         _react2.default.createElement(
-          'div',
+          'main',
           { className: 'content pure-u-1 pure-u-md-3-4' },
           _react2.default.createElement(_SearchBar2.default, { history: this.props.router }),
           this.renderChildren()
@@ -32279,7 +32279,7 @@ var _class = function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'div',
+        'aside',
         { className: 'sidebar pure-u-1 pure-u-md-1-4' },
         _react2.default.createElement(
           'div',
